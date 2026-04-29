@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPU Compare</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="layout">
+      <aside class="sidebar">
+        <div>
+          <h1 class="title">GPU Compare</h1>
+          <p class="subtitle">Search and add GPUs to compare.</p>
+        </div>
+
+        <div class="search-wrap" id="searchWrap">
+          <input
+            id="searchInput"
+            class="search-input"
+            type="text"
+            placeholder="Type a GPU name (e.g., RTX 4070)..."
+            autocomplete="off"
+          />
+          <button id="clearSearchBtn" class="clear-search" type="button" aria-label="Clear search">x</button>
+          <div id="searchDropdown" class="dropdown hidden"></div>
+        </div>
+
+        <div class="selection-head">
+          <span id="comparingCount" class="selection-label">Comparing (0)</span>
+          <div class="selection-actions">
+            <button id="addGroupBtn" class="add-group" type="button">+ Group</button>
+            <button id="clearAllBtn" class="clear-all" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div id="selectedTags" class="selected-tags"></div>
+      </aside>
+
+      <main class="chart-card">
+        <h2 class="chart-title">Performance Comparison</h2>
+        <div id="chartContent" class="chart-content"></div>
+        <div id="chartRuler" class="chart-ruler hidden"></div>
+      </main>
+    </div>
+  </div>
+
+  <div id="colorPopover" class="color-popover hidden">
+    <div class="color-popover-swatches" id="colorPopoverSwatches"></div>
+    <label class="color-popover-custom">
+      <span>Custom</span>
+      <input type="color" id="colorPopoverInput" />
+    </label>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
