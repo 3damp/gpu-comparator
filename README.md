@@ -1,2 +1,2 @@
 # GPU comparator
-vive-coded tool for personal use
+vibe-coded tool for personal use
