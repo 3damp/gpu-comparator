@@ -4,6 +4,7 @@ const DEFAULT_SELECTION_GROUPS = [
     color: "#f87171",
     names: [
       "GeForce RTX 5080",
+      "GeForce RTX 5070 Ti",
       "GeForce RTX 5070",
       "GeForce RTX 5060",
     ]
@@ -13,6 +14,7 @@ const DEFAULT_SELECTION_GROUPS = [
     color: "#22d3ee",
     names: [
       "GeForce RTX 5080 Laptop GPU",
+      "GeForce RTX 5070 Ti Laptop GPU",
       "GeForce RTX 5070 Laptop GPU",
       "GeForce RTX 5060 Laptop GPU",
     ]
@@ -167,16 +169,15 @@ function rebuildGpuMap(text) {
 }
 
 function readCachedDatabase() {
-  console.log('> read cached db');
   try {
     const rawData = localStorage.getItem(CACHE_KEY);
     const rawTime = localStorage.getItem(CACHE_TIME_KEY);
     if (!rawData || !rawTime) return null;
-
+    
     const timestamp = Number(rawTime);
     if (!Number.isFinite(timestamp)) return null;
     if (Date.now() - timestamp > CACHE_TTL_MS) return null;
-
+    
     return rawData && rawData.length > 1000 ? rawData : null;
   } catch (_error) {
     return null;
@@ -184,8 +185,6 @@ function readCachedDatabase() {
 }
 
 function writeCachedDatabase(data) {
-  console.log('> store data');
-  
   try {
     localStorage.setItem(CACHE_KEY, data);
     localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
@@ -345,6 +344,7 @@ function renderSearchDropdown() {
 
 function renderSelectedTags() {
   if (groups.length === 0) {
+    elements.searchWrap.classList.add("hidden");
     elements.selectedTags.innerHTML = '<div class="empty-selected">No groups yet. Click "+ Group" to add one.</div>';
     return;
   }
@@ -361,6 +361,9 @@ function renderSelectedTags() {
     .join("");
 
   const activeGroup = groups.find((g) => g.id === activeGroupId);
+  const groupTitleHtml = activeGroup
+    ? `<div class="group-gpu-title"><span class="group-gpu-title-dot" style="background:${activeGroup.color}"></span>${escapeHtmlAttr(activeGroup.label)}</div>`
+    : "";
   let tagsHtml;
   if (activeGroup && activeGroup.gpus.size > 0) {
     tagsHtml = Array.from(activeGroup.gpus.values())
@@ -375,12 +378,16 @@ function renderSelectedTags() {
       )
       .join("");
   } else {
-    tagsHtml = '<div class="empty-selected">No GPUs in this group. Search above to add.</div>';
+    tagsHtml = '<div class="empty-selected">No GPUs in this group yet. Use the search below to add.</div>';
   }
 
   elements.selectedTags.innerHTML =
     `<div class="group-tabs">${tabsHtml}</div>` +
-    `<div class="group-gpu-tags">${tagsHtml}</div>`;
+    `<div class="group-gpu-tags">${groupTitleHtml}${tagsHtml}</div>`;
+
+  // Move the search wrap into the active group container
+  elements.searchWrap.classList.remove("hidden");
+  elements.selectedTags.querySelector(".group-gpu-tags").appendChild(elements.searchWrap);
 }
 
 function renderChart() {

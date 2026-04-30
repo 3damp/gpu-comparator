@@ -15,7 +15,18 @@
           <p class="subtitle">Search and add GPUs to compare.</p>
         </div>
 
-        <div class="search-wrap" id="searchWrap">
+        
+        <div class="selection-head">
+          <span id="comparingCount" class="selection-label">Comparing (0)</span>
+          <div class="selection-actions">
+            <button id="addGroupBtn" class="add-group" type="button">+ Group</button>
+            <button id="clearAllBtn" class="clear-all" type="button">Clear group</button>
+          </div>
+        </div>
+        
+        <div id="selectedTags" class="selected-tags"></div>
+        
+        <div class="search-wrap hidden" id="searchWrap">
           <input
             id="searchInput"
             class="search-input"
@@ -26,16 +37,6 @@
           <button id="clearSearchBtn" class="clear-search" type="button" aria-label="Clear search">x</button>
           <div id="searchDropdown" class="dropdown hidden"></div>
         </div>
-
-        <div class="selection-head">
-          <span id="comparingCount" class="selection-label">Comparing (0)</span>
-          <div class="selection-actions">
-            <button id="addGroupBtn" class="add-group" type="button">+ Group</button>
-            <button id="clearAllBtn" class="clear-all" type="button">Clear</button>
-          </div>
-        </div>
-
-        <div id="selectedTags" class="selected-tags"></div>
       </aside>
 
       <main class="chart-card">
